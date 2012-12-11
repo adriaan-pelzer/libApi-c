@@ -30,8 +30,9 @@ static int setUrl(apiCtx_p aCtx, const char *url, const char *postargs, connecti
     int rc = -1;
 
     F(aCtx->url);
-    DOA("allocate memory for url", strdup, aCtx->url, NULL, url);
-    DOA("allocate memory for postargs", strdup, aCtx->postargs, NULL, postargs);
+    if(url) { DOA("allocate memory for url", strdup, aCtx->url, NULL, url); }
+    F(aCtx->postargs);
+    if(postargs) { DOA("allocate memory for postargs", strdup, aCtx->postargs, NULL, postargs); }
     aCtx->ctype = ctype;
 
     rc = 0;
