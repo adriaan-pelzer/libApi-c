@@ -26,11 +26,12 @@ over:
     return rc;
 }
 
-static int setUrl(apiCtx_p aCtx, const char *url, connectionType ctype) {
+static int setUrl(apiCtx_p aCtx, const char *url, const char *postargs, connectionType ctype) {
     int rc = -1;
 
     F(aCtx->url);
     DOA("allocate memory for url", strdup, aCtx->url, NULL, url);
+    DOA("allocate memory for postargs", strdup, aCtx->postargs, NULL, postargs);
     aCtx->ctype = ctype;
 
     rc = 0;
@@ -60,7 +61,7 @@ over:
     return rc;
 }
 
-int callApi(cc_p url, connectionType ctype, const char **paths, size_t pathcount, void *uCtx, int (*uCB)(void *uCtx, jsonStruct_p jS)) {
+int callApi(cc_p url, cc_p postargs, connectionType ctype, const char **paths, size_t pathcount, void *uCtx, int (*uCB)(void *uCtx, jsonStruct_p jS)) {
     int rc = -1;
     apiCtx_p aCtx = NULL;
 
@@ -68,7 +69,7 @@ int callApi(cc_p url, connectionType ctype, const char **paths, size_t pathcount
     whitelisted_paths = (char **) paths;
     whitelist_size = pathcount;
     DOA("allocate memory for api context", createApiCtx, aCtx, NULL);
-    DONT("set api url", setUrl, 0, aCtx, url, ctype);
+    DONT("set api url", setUrl, 0, aCtx, url, postargs, ctype);
     DONT("connect", curl_connect, 0, aCtx->url, aCtx->ctype, aCtx->postargs, uCtx, returnCB, streamCB);
 
     rc = 0;

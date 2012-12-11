@@ -16,6 +16,6 @@ typedef struct apiCtx {
     char *postargs;
 } *apiCtx_p;
 
-int callApi(cc_p url, connectionType ctype, const char **paths, size_t pathcount, void *uCtx, int (*uCB)(void *uCtx, jsonStruct_p jS));
+int callApi(cc_p url, cc_p postargs, connectionType ctype, const char **paths, size_t pathcount, void *uCtx, int (*uCB)(void *uCtx, jsonStruct_p jS));
 
 #endif
