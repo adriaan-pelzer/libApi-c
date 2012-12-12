@@ -1,4 +1,4 @@
-CFLAGS=-Wall -I/usr/local/include/ -I/usr/local/include/json-c -I/usr/include/curl
+CFLAGS=-g -Wall -I/usr/local/include/ -I/usr/local/include/json-c -I/usr/include/curl
 LIBS=-L/usr/local/lib -loauth -lJson -lCurl
 
 all: libApi
