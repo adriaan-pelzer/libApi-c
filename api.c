@@ -71,9 +71,8 @@ int callApi(cc_p url, cc_p postargs, connectionType ctype, const char **paths, s
     whitelist_size = pathcount;
     DOA("allocate memory for api context", createApiCtx, aCtx, NULL);
     DONT("set api url", setUrl, 0, aCtx, url, postargs, ctype);
-    DONT("connect", curl_connect, 0, aCtx->url, aCtx->ctype, aCtx->postargs, uCtx, returnCB, streamCB);
 
-    rc = 0;
+    rc = curl_connect(aCtx->url, aCtx->ctype, aCtx->postargs, uCtx, returnCB, streamCB);
 over:
     FF(aCtx, freeApiCtx);
     return rc;
